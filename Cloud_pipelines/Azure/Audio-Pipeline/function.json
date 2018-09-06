@@ -1,0 +1,19 @@
+{
+  "bindings": [
+    {
+      "type": "blobTrigger",
+      "name": "myBlob",
+      "path": "cloud-audio-dump",
+      "connection": "AzureWebJobsDashboard",
+      "direction": "in"
+    },
+    {
+      "type": "blob",
+      "name": "outputBlob",
+      "path": "cloud-audio-dump-results/{rand-guid}",
+      "connection": "AzureWebJobsDashboard",
+      "direction": "out"
+    }
+  ],
+  "disabled": false
+}

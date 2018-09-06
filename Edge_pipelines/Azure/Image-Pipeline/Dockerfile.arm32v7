@@ -1,0 +1,38 @@
+FROM anirbandas/azureiotclientbase:stretch-1.55-1.40.0.stable
+ 
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y python-numpy python-scipy && \
+    apt-get install -y libopenblas-dev || (echo "Failed to install libopenblas. Exiting..." && exit) && \
+    apt-get install -y liblapack-dev || (echo "Failed to install liblapack. Exiting..." && exit) && \
+    apt-get install -y python-opencv &&\
+    apt-get install zip unzip
+
+# Copy rest of the stuff inside
+COPY . .
+
+# Install Mxnet
+RUN apt-get update && \
+    apt-get install -y python-setuptools &&\
+    pip install wheel && \
+    tar xzf mxnet-python.tar.gz || (echo "Unable to untar mxnet python module. Exiting..." && exit) && \
+    mv python/dist/mxnet-0.11.0-py2.7.egg mxnet.zip && \
+    unzip -q mxnet.zip|| (echo "Unable to unzip mxnet dist. Exiting..." && exit) && \
+    rm -f mxnet.zip && \
+    ln -sf `pwd`/mxnet/libmxnet.so python/mxnet/libmxnet.so &&\
+    cd python && \
+    python setup.py install || (echo "Unable to install MXNET! Stopping verification..." && exit) && \
+    cd ../ && \
+    rm -rf tmp/ && \
+    rm -rf tests/ && \
+    rm -rf python/ && \
+    rm -rf EGG-INFO/ 
+
+
+RUN useradd -ms /bin/bash moduleuser
+USER moduleuser
+
+# Entry point with unbuffered python stdout
+ENTRYPOINT [ "python", "-u", "./main.py" ]
+

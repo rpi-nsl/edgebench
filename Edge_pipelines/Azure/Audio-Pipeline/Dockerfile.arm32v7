@@ -1,0 +1,22 @@
+FROM anirbandas/azureiotclientbase:stretch-1.55-1.40.0.stable
+
+WORKDIR /app
+
+# Install PocketSphinx
+#RUN git clone --recursive https://github.com/bambocher/pocketsphinx-python \
+#    && cd pocketsphinx-python \
+#    && python setup.py install \
+#    && rm -rf /app/pocketsphinx-python
+
+# Copy rest of the stuff inside
+COPY . .
+
+# Pip Install requirements
+RUN pip install -r requirements.txt
+
+RUN useradd -ms /bin/bash moduleuser
+USER moduleuser
+
+# Entry point with unbuffered python stdout
+ENTRYPOINT [ "python", "-u", "./main.py" ]
+
