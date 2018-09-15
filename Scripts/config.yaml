@@ -1,0 +1,24 @@
+# Device configurations
+Devices:
+  - name: iot-pi
+    ip: 192.168.0.10
+    password: raspberrypi
+
+# Resource Directories for Remote ssh Build
+GGDeviceDirectories:
+  - name: imagedirectory
+    actualpath: /home/pi/Pictures/Samples
+    mountpath: /home/pi/Pictures/mountedDirectory
+
+  - name: musicdirectory
+    actualpath: /home/pi/Music/Audiofiles
+    mountpath: /home/pi/Music/mountedDirectory
+
+  - name: statsdirectoryAWS
+    actualpath: /home/pi/AWS/Statistics
+    mountpath: /home/pi/AWS/mountedStatistics
+  
+  - name: statsdirectoryAzure
+    actualpath: /home/pi/Azure/Statistics
+    mountpath: /home/pi/Azure/mountedStatistics
+
