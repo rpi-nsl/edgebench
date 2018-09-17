@@ -1,0 +1,12 @@
+
+{
+	"AWS_CONFIG" : {
+		"aws_access_key_id" : "", 
+		"aws_secret_access_key" : "", 
+		"region_name" : ""
+	},
+	"FOLDER_PATH" : "<Picture or Audio workload folder>",
+	"IMAGE_BUCKET" : "<Image Result Bucket>",
+	"AUDIO_BUCKET" : "<Audio Result Bucket>",
+	"SCALAR_BUCKET" : "<Scalar Result Bucket>"
+}
