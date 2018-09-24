@@ -1,0 +1,20 @@
+{
+  "bindings": [
+    {
+      "type": "blobTrigger",
+      "name": "myBlob",
+      "path": "cloud-scalar-dump",
+      "connection": "AzureWebJobsDashboard",
+      "direction": "in"
+    },
+    {
+      "type": "blob",
+      "name": "outputBlob",
+      "path": "cloud-scalar-dump-results/{rand-guid}",
+      "connection": "AzureWebJobsDashboard",
+      "direction": "out"
+    }
+  ],
+
+  "disabled": false
+}
