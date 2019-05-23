@@ -38,6 +38,11 @@ edgebench
 │       │   Image-Pipeline  (All files related to Image Recognition in Azure IoT Edge)
 │       │   Scalar-Pipeline  (All files related to Scalar Pipeline in Azure IoT Edge)
 |
+└───InputData
+|   |
+|   └───Audio (Details related to the audio files used.)
+|   └───Image (Details related to the image files used.)
+|
 └───Scripts
 │   │   
 │   └───ScriptsForCloudUpload
