@@ -1,0 +1,4 @@
+azure-iothub-device-client~=1.4.3
+dlib
+numpy==1.16.0
+Pillow==5.4.1

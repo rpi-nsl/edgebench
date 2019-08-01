@@ -1,0 +1,5 @@
+numpy==1.16
+#scipy==1.2.0
+#opencv-python==3.1.0
+#mxnet==1.2.1
+azure-iothub-device-client~=1.4.3

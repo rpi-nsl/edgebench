@@ -53,10 +53,10 @@
 		"SCALAR_LOCAL_STATS_FILE" : "<full_path_scalar_pipeline_local_stats_file>"
 	},
 	"AWS_CONFIG" : {
-		"aws_access_key_id" : "<aws_account_access_key>", 
-		"aws_secret_access_key" : "<aws_account_secret_access_key>", 
+		"aws_access_key_id" : "", 
+		"aws_secret_access_key" : "", 
 		"region_name" : "us-east-1",
-		"AUDIO_BUCKET" : "<audio_results_bucket_name>",
+		"AUDIO_BUCKET" : "edgelineartest",
 		"IMAGE_BUCKET" : "<image_results_bucket_name>",
 		"SCALAR_BUCKET" : "<scalar_results_bucket_name>",
 		"IMAGE_OUTPUT_FILE" : "Outputs/AWS_Output_imagepipeline.txt",

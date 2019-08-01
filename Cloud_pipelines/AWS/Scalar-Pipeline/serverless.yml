@@ -1,0 +1,30 @@
+custom: {resultsBucketName: edgebench-scalar-pipeline-results-1024}
+functions:
+  cloud-lambda-scalar-coldstart-1024:
+    environment: {RESULTS_BUCKET: '${self:custom.resultsBucketName}'}
+    events:
+    - {s3: edgebench-scalar-pipeline-upload-1024}
+    handler: scalar_pipeline.function_handler
+    memorySize: 1024
+    timeout: 180
+provider:
+  iamRoleStatements:
+  - Action: ['s3:*']
+    Effect: Allow
+    Resource:
+    - Fn::Join:
+      - ''
+      - - 'arn:aws:s3:::'
+        - {Ref: ServerlessDeploymentBucket}
+    - arn:aws:s3:::edgebench-scalar-pipeline-upload-1024/*
+    - arn:aws:s3:::${self:custom.resultsBucketName}/*
+  name: aws
+  runtime: python2.7
+resources:
+  Resources:
+    resultsBucketName:
+      Properties: {BucketName: '${self:custom.resultsBucketName}'}
+      Type: AWS::S3::Bucket
+package:
+  exclude: [node_modules/**, LOGS/**, UPLOADS/**, RESULTS/**]
+service: aws-edgebench-scalar

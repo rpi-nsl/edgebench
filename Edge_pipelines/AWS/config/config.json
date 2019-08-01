@@ -1,0 +1,17 @@
+{
+    "coreThing" : {
+        "keepAlive" : 600,
+        "thingArn" : "arn:aws:iot:us-east-1:231968529044:thing/edgebench",
+        "keyPath" : "edgebench.key",
+        "caPath" : "root-CA.crt",
+        "ggHost" : "greengrass.iot.us-east-1.amazonaws.com",
+        "certPath" : "edgebench.pem",
+        "iotHost" : "a36ojokm1qghcy.iot.us-east-1.amazonaws.com"
+    },
+    "managedRespawn" : false,
+    "runtime" : {
+        "cgroup" : {
+            "useSystemd" : "yes"
+        }
+    }
+}

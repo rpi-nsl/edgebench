@@ -1,0 +1,34 @@
+Metadata-Version: 2.0
+Name: mxnet
+Version: 1.2.1
+Summary: MXNet Python Package
+Requires-Dist: numpy (<=1.15.0,>=1.8.2)
+Requires-Dist: requests (<2.19.0,>=2.18.4)
+Requires-Dist: graphviz (<0.9.0,>=0.8.1)
+
+====================
+This directory and nested files contain MXNet Python package and language binding.
+
+## Installation
+To install MXNet Python package, visit MXNet [Install Instruction](http://mxnet.incubator.apache.org/install/index.html)
+
+
+## Running the unit tests
+
+For running unit tests, you will need the [nose PyPi package](https://pypi.python.org/pypi/nose). To install:
+```bash
+pip install --upgrade nose
+```
+
+Once ```nose``` is installed, run the following from MXNet root directory:
+```
+nosetests tests/python/unittest
+nosetests tests/python/train
+
+```
+Home-page: https://github.com/apache/incubator-mxnet
+Author: UNKNOWN
+Author-email: UNKNOWN
+License: UNKNOWN
+Description: UNKNOWN
+Platform: UNKNOWN
