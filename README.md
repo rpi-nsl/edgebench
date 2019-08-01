@@ -66,76 +66,7 @@ edgebench
 ```
 
 
-### How to deploy the stuff in this repository?
 
-1. Cloud_pipelines:
-    
-    - Azure --> [Recommended Reading 1](https://github.com/yokawasa/azure-functions-python-samples/tree/master/v2functions), [Recommended Reading 2](https://unofficialism.info/posts/quick-start-with-azure-function-v2-python-preview/)
-        * audio-pipeline
-        * facedetect-pipeline
-        * image-pipeline
-        * pca-pipeline
-        * scalar-pipeline
-        * thumbnail-pipeline
-
-        Each of this application deployments are for Azure Functions V2 with Pythin runtime stack which is still in preview mode. In any case, each of these folders will contains some stuff needed to create the pythn package with ependencies and deploy the code on the Azure functions runtime.
-        You may wonder why don't I use `serverless` to deploy Azure functions. As it turns out, `serverless` supports deploying only NodeJS function with Azure. So we have to use Microsoft's own cli, which is cool in its own way. 
-        You need [Azure functions core tool](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local) in your machine in orer to deploy functions on Azure Funtions runtime.
-
-        To deploy audio-pipeline:, put all the required  python dependencies in the `audio-pipeline/requirements.txt` file. **Be sure to deploy ONLY from _inside_ the root folder for the application. _Do not go_ inside the folder inside the root folder with the same name and deploy from there. For e.g. deploy from inside `audio-pipeline/` folder and do not do inside `/audio-pipeline/audio-pipeline` and deploy.**
-        ```
-        >> ls
-        >> audio-pipeline  facedetect-pipeline  image-pipeline  pca-pipeline  scalar-pipeline  thumbnail-pipeline
-        >> cd audio-pipeline
-        >> audio-pipeline  bin  deploy.sh  extensions.csproj  host.json  local.settings.json  obj  requirements.txt
-        >> func azure functionapp publish <your_function_app_name> --build-native-deps
-        ```
-        This will create the package with the native dependencies from the `requirements.txt` file. In case you need to add some C libraries or some shared libraries in order to build the python packages, you can also include them in the building process as follows:
-        ```
-        >> func azure functionapp publish <your_function_app_name> --build-native-deps --additional-packages "python-dev cmake gcc build-essentials"
-        ```
-        This will first install `python-dev, cmake, gcc, build-essentials` and then `pip install` the requirements libraries. 
-
-        For deploying and testing the functions locally, 
-        ```
-        >> func start host
-        ```
-
-        This will start the functions lcoally. You can literaly bind the blob storage and then invoke functions running locally by uploading blobs files in the required container! Cool! Basically you can test if your whole pipeline works. Caveat is that packaging it and then deploying it is a pain in the butt. Everything works fine locally , but sometimes even after you successfully compile and package everything, during runtime in the serverless function, the runtime fails to find shared libraries. Look at this [gist](https://gist.github.com/akaanirban/eb239ba023894541e418bf20a486fd14) if your deployment fails to find any package or a`*.so` file.
-
-        To deploy you can run the `deploy.sh` script inside each application.
-
-        Ofcourse it is possible to have multiple functions inside each root folder, so that when you deploy you have multiple functions running inside one function app.But for simplicity, it is better if you have a single function inside the function app at a time while measuring performance as it will create the bnecessary isolation.
-
-
-    #### Then comes the `local.settings.json` file:
-    ```json
-            {
-            "IsEncrypted": false,
-            "Values": {
-                "FUNCTIONS_WORKER_RUNTIME": "python",
-                "AzureWebJobsStorage": "DefaultEndpointsProtocol=https;AccountName=functiontest111;AccountKey=KFgkw2+I1eSP981mCIR0nX+sZz5Dk/i/2wUqJEM9T4X2pAC4DHvq60saxYQSpQO5TTZThwzJZ4m4oQi6/zJvEw==;EndpointSuffix=core.windows.net",
-                "MyStorageConnectionAppSetting": "DefaultEndpointsProtocol=https;AccountName=functiontest111;AccountKey=KFgkw2+I1eSP981mCIR0nX+sZz5Dk/i/2wUqJEM9T4X2pAC4DHvq60saxYQSpQO5TTZThwzJZ4m4oQi6/zJvEw==;EndpointSuffix=core.windows.net"
-                }
-        }
-    ```
-    Update necessary `Values` in this json file. These **NEEDS** to be updated to the function app while deploying so that the serverless function can access these functions during runtime. Also make sure that the variable names you are mentioning here, mathces those if mentioned in `function.json` inside the inner folder.
- 
-2. Edge Pipelines:
-
-    - Azure Pipelines: 
-    
-        Deploy Azure pipelines through `VScode`. Refer to this page as to how this can be done [Deploy Azure IoT Edge Modules from VSCode](https://docs.microsoft.com/en-us/azure/iot-edge/how-to-deploy-modules-vscode) and install the software from [here](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.azure-iot-edge). One caveat is for arm32v7 processors, you cannot build it on the x86 machine unless you have the qemu hack. Check the ][Hypriot](https://blog.hypriot.com/post/setup-simple-ci-pipeline-for-arm-images/) page as how to enable `qemu` for building arm images on x86. 
-        
-        - Azure amd64 images can be easily build and deployed to the device from the VSCode. 
-        - Also, there is another way you can deploy stuff wherever you want [Look Here for Details](https://docs.microsoft.com/en-us/azure/iot-edge/how-to-deploy-modules-cli):
-            * Compile and push the Docker images separately. They are all at this moment in `anirbandas/edgebench:*` `dockerhub` repository with all arm32v7 and amd64 tags.
-            * Create a deployment manifest. Copy the one from what VSCode generates from previous method.
-            * Use Azure cli to directly deploy to device using the deployment manifest
-                ```
-                az iot edge set-modules --device-id [device id] --hub-name [hub name] --content [file path]
-                ```
-            **DONE** !
 
 ### TODO
 1. Generate Architecture specific `requirements.txt` for Azure Iot Edge 
