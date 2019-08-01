@@ -1,0 +1,30 @@
+FROM ubuntu:xenial
+
+WORKDIR /app
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends libcurl4-openssl-dev \
+    python-pip \
+    libboost-python1.58-dev \
+    libpython-dev \
+    libopenblas-dev \
+    liblapack-dev  \
+    libgtk2.0-dev \
+    pkg-config \
+    libavcodec-dev \
+    libavformat-dev \
+    libswscale-dev && \
+    rm -rf /var/lib/apt/lists/* 
+
+RUN pip install --upgrade pip
+COPY requirements.amd64.txt ./
+RUN pip install -r requirements.amd64.txt
+
+COPY . .
+
+RUN rm mxnet-1.2.1-py2.py3-none-any.whl
+
+RUN useradd -ms /bin/bash moduleuser
+USER moduleuser
+
+ENTRYPOINT [ "python", "-u", "./main.py" ]

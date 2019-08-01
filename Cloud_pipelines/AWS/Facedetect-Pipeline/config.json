@@ -1,0 +1,15 @@
+{
+	"AWS_CONFIG" : {
+		"aws_access_key_id" : "", 
+		"aws_secret_access_key" : "", 
+		"region_name" : "us-east-1"
+	},
+"memoryconfig" : "1536,1664,2048",
+"FOLDER_PATH" : "//home//pi//Pictures//GroupImages",
+"upload_bucketName1536" : "upload-lambda-facedetect-live5-1536",
+"upload_bucketName1664" : "upload-lambda-facedetect-live5-1664",
+"upload_bucketName2048" : "upload-lambda-facedetect-live5-2048",
+"result_bucketName1536": "results-lambda-facedetect-live5-1536",
+"result_bucketName1664": "results-lambda-facedetect-live5-1664",
+"result_bucketName2048": "results-lambda-facedetect-live5-2048"
+}

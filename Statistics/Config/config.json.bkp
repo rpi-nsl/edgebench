@@ -1,0 +1,73 @@
+{
+	"AZURE_CLOUD_CONFIG" : {
+		"account_name" : "<Azure_storage_account_name>",
+		"account_key" : "Azure_Storage_account_key",
+		"connection_string" : "Azure_Storage_account_connection_string" ,
+		"region_name" : "us-east-1",
+		"AUDIO_PIPELINE_CONTAINER" : "<audio_pipeline_container_name>",
+		"IMAGE_PIPELINE_CONTAINER" : "<image_pipeline_container_name>",
+		"SCALAR_PIPELINE_CONTAINER": "<scalar_pipeline_container_name>",
+		"IMAGE_OUTPUT_FILE" : "Outputs/Azure_Output_imagepipeline.txt",
+		"AUDIO_OUTPUT_FILE" : "Outputs/Azure_Output_audiopipeline.txt",
+		"SCALAR_OUTPUT_FILE" : "Outputs/Azure_Output_scalarpipeline.txt",
+		"IMAGE_LOCAL_STATS_FILE" : "<full_path_image_pipeline_local_stats_file>",
+		"AUDIO_LOCAL_STATS_FILE" : "<full_path_audio_pipeline_local_stats_file>",
+		"SCALAR_LOCAL_STATS_FILE" : "<full_path_scalar_pipeline_local_stats_file>",
+		"AUDIO_BLOB_TOKEN" : "<wildcard_to_distinguish_audio_folder_in_blob_storage>",
+		"IMAGE_BLOB_TOKEN" : "<wildcard_to_distinguish_image_folder_in_blob_storage>",
+		"SCALAR_BLOB_TOKEN" : "<wildcard_to_distinguish_scalar_folder_in_blob_storage>"
+	},
+	"AZURE_CONFIG" : {
+		"account_name" : "<Azure_storage_account_name>",
+		"account_key" : "Azure_Storage_account_key",
+		"connection_string" : "Azure_Storage_account_connection_string" ,
+		"region_name" : "us-east-1",
+		"AUDIO_PIPELINE_CONTAINER" : "<audio_pipeline_container_name>",
+		"IMAGE_PIPELINE_CONTAINER" : "<image_pipeline_container_name>",
+		"SCALAR_PIPELINE_CONTAINER": "<scalar_pipeline_container_name>",
+		"IMAGE_OUTPUT_FILE" : "Outputs/Azure_Output_imagepipeline.txt",
+		"AUDIO_OUTPUT_FILE" : "Outputs/Azure_Output_audiopipeline.txt",
+		"SCALAR_OUTPUT_FILE" : "Outputs/Azure_Output_scalarpipeline.txt",
+		"IMAGE_LOCAL_STATS_FILE" : "<full_path_image_pipeline_local_stats_file>",
+		"AUDIO_LOCAL_STATS_FILE" : "<full_path_audio_pipeline_local_stats_file>",
+		"SCALAR_LOCAL_STATS_FILE" : "<full_path_scalar_pipeline_local_stats_file>",
+		"AUDIO_BLOB_TOKEN" : "<wildcard_to_distinguish_audio_folder_in_blob_storage>",
+		"IMAGE_BLOB_TOKEN" : "<wildcard_to_distinguish_image_folder_in_blob_storage>",
+		"SCALAR_BLOB_TOKEN" : "<wildcard_to_distinguish_scalar_folder_in_blob_storage>"
+	},
+
+
+
+	"AWS_CLOUD_CONFIG" : {
+		"aws_access_key_id" : "<aws_account_access_key>", 
+		"aws_secret_access_key" : "<aws_account_secret_access_key>", 
+		"region_name" : "us-east-1",
+		"AUDIO_BUCKET" : "<audio_results_bucket_name>",
+		"IMAGE_BUCKET" : "<image_results_bucket_name>",
+		"SCALAR_BUCKET" : "<scalar_results_bucket_name>",
+		"IMAGE_OUTPUT_FILE" : "Outputs/AWS_Output_imagepipeline.txt",
+		"AUDIO_OUTPUT_FILE" : "Outputs/AWS_Output_audiopipeline.txt",
+		"SCALAR_OUTPUT_FILE" : "Outputs/AWS_Output_scalarpipeline.txt",
+		"IMAGE_LOCAL_STATS_FILE" : "<full_path_image_pipeline_local_stats_file>",
+		"AUDIO_LOCAL_STATS_FILE" : "<full_path_audio_pipeline_local_stats_file>",
+		"SCALAR_LOCAL_STATS_FILE" : "<full_path_scalar_pipeline_local_stats_file>"
+	},
+	"AWS_CONFIG" : {
+		"aws_access_key_id" : "<aws_account_access_key>", 
+		"aws_secret_access_key" : "<aws_account_secret_access_key>", 
+		"region_name" : "us-east-1",
+		"AUDIO_BUCKET" : "<audio_results_bucket_name>",
+		"IMAGE_BUCKET" : "<image_results_bucket_name>",
+		"SCALAR_BUCKET" : "<scalar_results_bucket_name>",
+		"IMAGE_OUTPUT_FILE" : "Outputs/AWS_Output_imagepipeline.txt",
+		"AUDIO_OUTPUT_FILE" : "Outputs/AWS_Output_audiopipeline.txt",
+		"SCALAR_OUTPUT_FILE" : "Outputs/AWS_Output_scalarpipeline.txt",
+		"IMAGE_LOCAL_STATS_FILE" : "<full_path_image_pipeline_local_stats_file>",
+		"AUDIO_LOCAL_STATS_FILE" : "<full_path_audio_pipeline_local_stats_file>",
+		"SCALAR_LOCAL_STATS_FILE" : "<full_path_scalar_pipeline_local_stats_file>"
+	},
+	"FOLDER_PATH" : "//home//user//Pictures//First200",
+	"DATABASE_NAME" : "test.db",
+	"DYNAMODB_TABLE" : "test_dynamodb_table",
+	"CDF_BINS" : 40
+}

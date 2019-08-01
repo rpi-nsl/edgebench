@@ -1,0 +1,23 @@
+FROM resin/raspberrypi3-debian:stretch
+
+WORKDIR /app
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends build-essential libssl-dev libffi-dev libboost-python1.62.0 python-pip libpython-dev python-setuptools && \
+    rm -rf /var/lib/apt/lists/* 
+
+RUN pip install --upgrade pip 
+RUN pip install --upgrade setuptools 
+COPY requirements.txt ./
+
+#Pillow requirements
+RUN apt-get update && apt-get install -y --no-install-recommends libjpeg-dev zlib1g-dev
+
+RUN pip install -r requirements.txt
+
+COPY . .
+
+RUN useradd -ms /bin/bash moduleuser
+USER moduleuser
+
+ENTRYPOINT [ "python", "-u", "./main.py" ]

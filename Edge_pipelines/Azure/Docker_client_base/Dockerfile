@@ -1,27 +1,31 @@
 FROM resin/raspberrypi3-debian:stretch
 
+ENV INITSYSTEM=on
+
 WORKDIR /app
 
-# Install dependencies of Jessie on Stretch (like libboost and libssl1)
-RUN echo "deb http://deb.debian.org/debian jessie main" >> /etc/apt/sources.list
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    git \
-    libasound2-dev \
-    libboost-python1.55-dev \
-    libcurl4-openssl-dev \
-    libffi-dev \
-    libpulse-dev \
-    libssl-dev \
-    libssl1.0.0 \
-    python-dev \
-    python-pip \
-    python-setuptools \
-    swig \
-    nano
+# Update image
+SHELL ["/bin/bash", "-c"]
 
-# Install python requirements (example azure-iothub-device-client==1.4.0.0b0)
+RUN apt-get update && apt-get install -y \
+    cmake \
+    build-essential \
+    curl \
+    libcurl4-openssl-dev \
+    libssl1.0-dev \
+    libffi-dev \
+    uuid-dev \
+    apt-utils \ 
+    python \
+    python-pip \
+    python-virtualenv \
+    python-setuptools \
+    python3 \
+    python3-pip \
+    python3-virtualenv \
+    libboost-python-dev \
+    pkg-config \
+    valgrind 
+
 COPY requirements.txt ./
 RUN pip install -r requirements.txt
-
-

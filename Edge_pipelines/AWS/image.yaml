@@ -1,0 +1,133 @@
+# Greeengrass Group definition file
+Group:
+  name: edgebench
+Cores:
+  - name: edgebench
+    key_path: ./certs
+    config_path: ./config
+    SyncShadow: False
+
+Lambdas:
+  - name: &LambdaName edgebench-image-pipeline
+    handler: image_pipeline.lambda_handler
+    package: lambdas/Image-Pipeline
+    alias: pca
+    role: 'arn:aws:iam::231968529044:role/edgebench-greengrass-role-lambdas' # Use an existing role instead of auto-created one
+    environment:
+      IMAGE_DIRECTORY: /home/pi/Pictures/mountedDirectory
+      STATS_DIRECTORY: /home/pi/AWS/mountedStatistics
+      RESULTS_BUCKET : edgebench-result-image
+    greengrassConfig:
+      MemorySize: 524288 # Kb, ask AWS why
+      Timeout: 100 # Sec
+      Pinned: True # Set True for long-lived functions
+      Environment:
+        AccessSysfs: False
+        ResourceAccessPolicies:
+           - ResourceId: imagedirectory
+             Permission: 'rw'
+           - ResourceId: statisticsdirectory
+             Permission: 'rw'
+           - ResourceId: squeezenet_model
+             Permission: 'rw'
+        Variables:
+          IMAGE_DIRECTORY: /home/pi/Pictures/mountedDirectory
+          STATS_DIRECTORY: /home/pi/AWS/mountedStatistics
+          RESULTS_BUCKET : edgebench-result-image
+
+
+Subscriptions:
+  - Source: Lambda::edgebench-image-pipeline
+    Subject: greengrass/image_pipeline
+    Target: cloud
+
+
+ResultS3Buckets:
+ - Bucket: &ImageBucketName "edgebench-result-image"
+   CreateBucketConfiguration:
+     LocationConstraint: 'us-east-1'
+
+
+Resources:
+    # Resource as defined at http://boto3.readthedocs.io/en/latest/reference/services/greengrass.html#Greengrass.Client.create_resource_definition_version
+  - Name: musicdirectory
+    Id: musicdirectory
+    LocalVolumeResourceData:
+      SourcePath: /home/pi/Music/Audiofiles
+      DestinationPath: /home/pi/Music/mountedDirectory
+      GroupOwnerSetting:
+        AutoAddGroupOwner: True
+
+  - Name: imagedirectory
+    Id: imagedirectory
+    LocalVolumeResourceData:
+      SourcePath: /home/pi/Pictures/Samples
+      DestinationPath: /home/pi/Pictures/mountedDirectory
+      GroupOwnerSetting:
+        AutoAddGroupOwner: True
+
+  - Name: statisticsdirectory
+    Id: statisticsdirectory
+    LocalVolumeResourceData:
+      SourcePath: /home/pi/AWS/Statistics
+      DestinationPath: /home/pi/AWS/mountedStatistics
+      GroupOwnerSetting:
+        AutoAddGroupOwner: True
+
+  - Name: matricesdirectory
+    Id: matricesdirectory
+    LocalVolumeResourceData:
+      SourcePath: /home/pi/Matrices/Matrices
+      DestinationPath: /home/pi/Matrices/mountedDirectory
+      GroupOwnerSetting:
+        AutoAddGroupOwner: True
+
+  - Name: squeezenet_model
+    Id: squeezenet_model
+    S3MachineLearningModelResourceData:
+      DestinationPath: /greengrass-machine-learning/mxnet/squeezenet/
+      S3Uri: https://s3.amazonaws.com/mlmodels-edgebench/squeezenet.zip
+
+Loggers:
+    # For parameter definitions, see https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/greengrass.html#Greengrass.Client.create_logger_definition
+  - Component: Lambda  # 'GreengrassSystem'|'Lambda'
+    Id: logger_1       # Arbitrary string
+    Level: INFO       # 'DEBUG'|'INFO'|'WARN'|'ERROR'|'FATAL'
+    Space: 1024        # The amount of file space, in KB, to use if the local file system is used for logging purposes
+    Type: FileSystem   # 'FileSystem'|'AWSCloudWatch'
+
+Devices: # not implemented
+  - name: ml_take2_thing_1
+    key_path: ./certs
+
+# Topic Rules
+Rules:
+  - ruleName: "edgebench_image"
+    topicRulePayload:
+      sql: >-
+       SELECT parse_time("yyyy-MM-dd'T'HH:mm:ss.SSSSSS", timestamp() ) as iothub_timestamp, topic() as mqtt_topic, imagefilename, classification_4 as fifth_prediction, classification_3 as fourth_prediction , classification_2 as third_prediction , classification_1 as second_prediction, classification_0 as first_prediction, messagesendutctime FROM 'greengrass/image_pipeline'
+      description: "Sends Image Results to S3 bucket"
+      ruleDisabled: False
+      awsIotSqlVersion: "2016-03-23"
+      actions:
+        - s3:
+            roleArn: 'arn:aws:iam::231968529044:role/edgebench-greengrass-role-rules'
+            bucketName: edgebench-result-image
+            key: '${imagefilename}.json'
+            cannedAcl: 'private'
+
+
+
+# Resource Directories for Remote ssh Build
+GGDeviceDirectories:
+  - name: imagedirectory
+    actualpath: /home/pi/Pictures/Samples
+    mountpath: /home/pi/Pictures/mountedDirectory
+
+  - name: musicdirectory
+    actualpath: /home/pi/Music/Audiofiles
+    mountpath: /home/pi/Music/mountedDirectory
+
+  - name: statsdirectory
+    actualpath: /home/pi/AWS/Statistics
+    mountpath: /home/pi/AWS/mountedStatistics

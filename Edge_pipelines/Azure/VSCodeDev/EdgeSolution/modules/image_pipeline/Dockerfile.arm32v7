@@ -1,0 +1,41 @@
+# Idea from https://github.com/mohaseeb/raspberrypi3-opencv-docker/blob/master/opencv_3/3.1.0/Dockerfile
+FROM resin/raspberrypi3-debian:stretch
+
+WORKDIR /app
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends libboost-python1.62.0 python-pip libpython-dev \
+    build-essential cmake pkg-config unzip\
+    liblapack-dev  \
+    # needed by highgui tool
+    #libgtk2.0-dev \
+    # to work with images
+    libjpeg-dev libtiff5-dev libjasper-dev libpng12-dev &&\
+    rm -rf /var/lib/apt/lists/* 
+ 
+RUN apt-get clean \
+    && apt-get autoclean \
+    && apt-get autoremove \
+    && rm -rf /tmp/* /var/tmp/* \
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -f /var/cache/apt/archives/*.deb \
+    && rm -f /var/cache/apt/archives/partial/*.deb \
+    && rm -f /var/cache/apt/*.bin 
+
+RUN pip install --upgrade pip 
+RUN pip install --upgrade setuptools 
+COPY requirements.txt ./
+RUN pip install -r requirements.txt
+
+COPY . .
+
+RUN pip install --no-dependencies mxnet-1.2.1-py2.py3-none-any.whl 
+
+RUN rm mxnet-1.2.1-py2.py3-none-any.whl
+
+RUN apt-get update && apt-get install -y --no-install-recommends wget && ./download_build_install_opencv.sh
+
+RUN useradd -ms /bin/bash moduleuser
+USER moduleuser
+
+ENTRYPOINT [ "python", "-u", "./main.py" ]
