@@ -18,27 +18,30 @@ Each application processes a bank of input data on an edge device and sends resu
 
 ```
 edgebench
-│   README.md
+└───README.md
 │
 │
 └───Cloud_pipelines
 │   │   
 │   └───AWS
 │   |   │   Audio-Pipeline (All files related to Audio/Speech to Text in AWS cloud)
+│   |   │   Facedetect-Pipeline (All files related to Face Detection in AWS cloud)
 │   |   │   Image-Pipeline (All files related to Image Recognition in AWS cloud)
 │   |   │   Scalar-Pipeline (All files related to Scalar Values Generator in AWS cloud)
+│   |   │   Thumbnail-Pipeline (All files related to Image Resizing in AWS cloud)
 |   |
 │   └───Azure
 │       │   Audio-Pipeline (All files related to Audio/Speech to Text in Azure cloud)
 │       │   Image-Pipeline (All files related to Image Recognition in Azure cloud)
 |       
 └───Data_upload_download (Scripts for uploading files to cloud / downloading benchmark data)
-│
+│       │   Fetchfromblobstorage.py (Script to aid in downloading benchmark data)
+│       │   Fileuploader.py (Script to aid in uploading sample data)
 │
 └───Edge_Pipelines
 │   │   
 │   └───AWS
-│   |   │   lambdas (All files related to the audio, image, and scalar pipeline functions in Greengrass)
+│   |   │   lambdas (All files related to the audio, facedetect, image, thumbnail, and scalar pipeline functions in Greengrass)
 │   |   │   certs, config, initial_setup (Configuration folders used by EdgeBench)
 |   |
 │   └───Azure
