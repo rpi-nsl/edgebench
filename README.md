@@ -6,7 +6,7 @@ EdgeBench is an open-source benchmark suite for serverless edge computing platfo
 - An image recognition machine learning model (used [MXNet](https://github.com/apache/incubator-mxnet) internally)
 - A scalar value generator emulating a temperature -humidity sensor
 - A face detection application using [dlib](http://dlib.net/)
-- A matrix dimension reduction application using PCA in `Numpy`
+- A matrix dimension reduction application using PCA in `Numpy` (WIP)
 - A image resizing application using [Pillow](https://pillow.readthedocs.io/en/stable/)
 
 Each application processes a bank of input data on an edge device and sends results to cloud storage. We target EdgeBench for two of the most popular edge computing platforms currently available, [AWS Greengrass](https://aws.amazon.com/greengrass/) and [Microsoft Azure IoT Edge](https://azure.microsoft.com/en-us/services/iot-edge/) , to compare not only the edge platforms to each other but also to the providers’ respective cloud-only alternatives, EdgeBench also provides cloud-based workload implementations.
