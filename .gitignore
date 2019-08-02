@@ -1,3 +1,7 @@
 **/.serverless/*
 **/.edgebench/*
 **/.gg/*
+**/certs/*
+./Edge_pipelines/AWS/config/*
+./Edge_pipelines/AWS/initial_setup/MASTER.yaml
+./Cloud_pipelines/AWS/.edgebench_api_data
