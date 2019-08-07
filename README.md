@@ -20,8 +20,6 @@ Each application processes a bank of input data on an edge device and sends resu
 edgebench
 └───README.md
 │
-│
-│
 └───Cloud_pipelines
 │   │   
 │   └───AWS
